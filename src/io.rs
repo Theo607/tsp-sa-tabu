@@ -78,3 +78,65 @@ pub fn save_tour(permutation: &[u16], file_path: &str) -> io::Result<()> {
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    use std::io::Write;
+
+    fn create_mock_tsp(path: &str) {
+        let content = "NAME: test\nTYPE: TSP\nNODE_COORD_SECTION\n1 10.0 20.0\n2 30.0 40.0\nEOF";
+        let mut file = File::create(path).unwrap();
+        file.write_all(content.as_bytes()).unwrap();
+    }
+
+    #[test]
+    fn test_parse_tsp_valid_data() {
+        let path = "test_valid.tsp";
+        create_mock_tsp(path);
+
+        let result = parse_tsp(path).expect("Should successfully parse");
+        
+        assert_eq!(result.len(), 2);
+        assert_eq!(result[0].index, 1);
+        assert_eq!(result[0].x, 10.0);
+        assert_eq!(result[1].y, 40.0);
+
+        fs::remove_file(path).unwrap();
+    }
+
+    #[test]
+    fn test_parse_tsp_missing_file() {
+        let result = parse_tsp("non_existent_file.tsp");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_save_tour_format() {
+        let path = "test_output.tour";
+        let route = vec![1, 2, 3];
+
+        save_tour(&route, path).expect("Should save successfully");
+
+        let content = fs::read_to_string(path).unwrap();
+        assert!(content.contains("TYPE: TOUR"));
+        assert!(content.contains("DIMENSION: 3"));
+        assert!(content.contains("TOUR_SECTION"));
+        assert!(content.contains("1\n2\n3\n-1"));
+
+        fs::remove_file(path).unwrap();
+    }
+
+    #[test]
+    fn test_save_tour_creates_directory() {
+        let path = "nested_dir/test.tour";
+        let route = vec![1];
+
+        save_tour(&route, path).expect("Should create dir and save");
+        
+        assert!(Path::new(path).exists());
+
+        fs::remove_dir_all("nested_dir").unwrap();
+    }
+}
