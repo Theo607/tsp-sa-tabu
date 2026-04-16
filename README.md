@@ -1,16 +1,16 @@
 # TSP Datasets:
-
-- Western Sahara wi29.tsp
-- Djibouti dj38.tsp
-- Quatar qa194.tsp
-- Uruguay uy734.tsp
-- Zimbabwe zi929.tsp
-
-- Oman mu1979.tsp
-- Canada ca4663.tsp
-- Tanzania tz6117.tsp
-- Egypt eg7146.tsp
-- Ireland ei8246.tsp
+| Name   | File    |
+|--------------- | --------------- |
+|  Western Sahara  |  wi29.tsp  |
+|  Djibouti  |  dj38.tsp  |
+|  Quatar  |  qa194.tsp  |
+|  Uruguay  |  uy734.tsp  |
+|  Zimbabwe |  zi929.tsp  |
+|  Oman  |  mu1979.tsp  |
+|  Canada  |  ca4663.tsp  |
+|  Tanzania  |  tz6117.tsp  |
+|  Egypt |  eg7146.tsp |
+|  Ireland |  ei8246.tsp |
 
 # Output Location / Format:
 ```
