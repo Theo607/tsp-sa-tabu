@@ -1,7 +1,9 @@
-use std::fs::File;
-use std::io::{self, BufRead, BufReader};
+use std::fs::{self, File};
+use std::io::{self, BufRead, BufReader, Write}; 
+use std::path::Path;
 
-pub const FILE_PATH : &str= "../assets/";
+pub const FILE_PATH_IN : &str= "../assets/";
+pub const FILE_PATH_OUT : &str = "../output/";
 
 pub const FILE_NAMES : &[&str; 10] = &[
     "wi29.tsp", "dj38.tsp", "qa194.tsp",
@@ -49,4 +51,30 @@ pub fn parse_tsp(file_path: &str) -> io::Result<Vec<City>> {
     }
 
     Ok(cities)
+}
+
+
+
+pub fn save_tour(permutation: &[u16], file_path: &str) -> io::Result<()> {
+    if let Some(parent) = Path::new(file_path).parent() {
+        fs::create_dir_all(parent)?;
+    }
+
+    let mut file = File::create(file_path)?;
+
+    writeln!(file, "NAME: {}", file_path)?;
+    writeln!(file, "TYPE: TOUR")?;
+    writeln!(file, "DIMENSION: {}", permutation.len())?;
+    writeln!(file, "TOUR_SECTION")?;
+
+    for &index in permutation {
+        writeln!(file, "{}", index)?;
+    }
+
+    writeln!(file, "-1")?;
+    writeln!(file, "EOF")?;
+
+    file.sync_all()?; 
+
+    Ok(())
 }
