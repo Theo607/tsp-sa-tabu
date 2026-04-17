@@ -224,16 +224,38 @@ impl SimulationParameters {
 Używając opisanej metody symulowanego wyżarzania otrzymano następujące wyniki:
 
 #table(
-  columns: (auto, auto, auto),
-  [Dane], [Uzyskane wyniki], [Wyniki ze Źródła],
-  [Western Sahara], [#image("figures/wi29_tour.svg")], [#image("optimal_source/witour.gif")],
-  [Djibouti], [#image("figures/dj38_tour.svg")], [#image("optimal_source/djtour.gif")],
-  [Qatar], [#image("figures/qa194_tour.svg")], [#image("optimal_source/qatour.gif")],
-  [Uruguay], [#image("figures/uy734_tour.svg")], [#image("optimal_source/uytour.gif")],
-  [Zimbabwe], [#image("figures/zi929_tour.svg")], [#image("optimal_source/zitour.gif")],
-  [Oman], [#image("figures/mu1979_tour.svg")], [#image("optimal_source/mutour.gif")],
-  [Canada], [#image("figures/ca4663_tour.svg")], [#image("optimal_source/catour.gif")],
+  columns: (1fr, 2fr, 2fr),
+  align: horizon,
+  stroke: 0.5pt + gray,
+  inset: 10pt,
+  [*Kraj*], [*Wyniki (ANN)*], [*Wynik Optymalny*],
+  
+  [Western Sahara (wi29)], 
+  image("figures/ann_wi29_tour.svg", height: 80pt), 
+  image("optimal_source/witour.gif", height: 80pt),
 
+  [Djibouti (dj38)], 
+  image("figures/ann_dj38_tour.svg", height: 80pt), 
+  image("optimal_source/djtour.gif", height: 80pt),
+
+  [Qatar (qa194)], 
+  image("figures/ann_qa194_tour.svg", height: 80pt), 
+  image("optimal_source/qatour.gif", height: 80pt),
+
+  [Uruguay (uy734)], 
+  image("figures/ann_uy734_tour.svg", height: 80pt), 
+  image("optimal_source/uytour.gif", height: 80pt),
+
+  [Zimbabwe (zi929)], 
+  image("figures/ann_zi929_tour.svg", height: 80pt), 
+  image("optimal_source/zitour.gif", height: 80pt),
+
+  [Oman (mu1979)], 
+  image("figures/ann_mu1979_tour.svg", height: 80pt), 
+  image("optimal_source/mutour.gif", height: 80pt),
+
+  [Canada (ca4663)], 
+  image("figures/ann_ca4663_tour.svg", height: 80pt), 
+  image("optimal_source/catour.gif", height: 80pt),
 )
-
 
