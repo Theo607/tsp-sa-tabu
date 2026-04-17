@@ -2,8 +2,8 @@ use std::fs::{self, File};
 use std::io::{self, BufRead, BufReader, Write}; 
 use std::path::Path;
 
-pub const FILE_PATH_IN : &str= "../assets/";
-pub const FILE_PATH_OUT : &str = "../output/";
+pub const FILE_PATH_IN : &str= "assets/";
+pub const FILE_PATH_OUT : &str = "output/";
 
 pub const FILE_NAMES : &[&str; 10] = &[
     "wi29.tsp", "dj38.tsp", "qa194.tsp",
@@ -13,9 +13,9 @@ pub const FILE_NAMES : &[&str; 10] = &[
 ];
 
 pub struct City {
-    index : u16,
-    x : f32,
-    y : f32,
+    pub index : u16,
+    pub x : f32,
+    pub y : f32,
 }
 
 pub fn parse_tsp(file_path: &str) -> io::Result<Vec<City>> {
@@ -23,6 +23,7 @@ pub fn parse_tsp(file_path: &str) -> io::Result<Vec<City>> {
     let reader = BufReader::new(file);
     let mut cities = Vec::new();
     let mut is_coord_section = false;
+    let mut internal_index = 1;
 
     for line in reader.lines() {
         let line = line?; 
@@ -41,18 +42,16 @@ pub fn parse_tsp(file_path: &str) -> io::Result<Vec<City>> {
             let parts: Vec<&str> = trimmed.split_whitespace().collect();
             
             if parts.len() >= 3 {
-                let index = parts[0].parse::<u16>().map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid index"))?;
-                let x = parts[1].parse::<f32>().map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid X coordinate"))?;
-                let y = parts[2].parse::<f32>().map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid Y coordinate"))?;
+                let x = parts[1].parse::<f32>().map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid X"))?;
+                let y = parts[2].parse::<f32>().map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid Y"))?;
 
-                cities.push(City { index, x, y });
+                cities.push(City { index: internal_index, x, y });
+                internal_index += 1;
             }
         }
     }
-
     Ok(cities)
 }
-
 
 
 pub fn save_tour(permutation: &[u16], file_path: &str) -> io::Result<()> {

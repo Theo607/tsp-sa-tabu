@@ -13,13 +13,13 @@ pub struct SimulationParameters {
 }
 
 impl SimulationParameters {
-    pub fn new(size: u64) -> Self {
+    pub const fn new(size: u64) -> Self {
         Self {
             size,
-            base_temperature_k: 0.5,
-            epoch_k: 0.3,
-            tau_k: 0.1,
-            epsilon: 0.001,
+            base_temperature_k: 100.0, 
+            epoch_k: 500.0,            
+            tau_k: 1.0,
+            epsilon: 1e-7,            
             min_delta: -1e-9,
         }
     }
@@ -113,8 +113,5 @@ pub fn should_stop(
     no_improve_epochs: u64,
     p: &SimulationConstants,
 ) -> bool {
-    let frozen = temp < p.epsilon * avg_delta;
-    let stagnation = no_improve_epochs > 20;
-
-    frozen || stagnation
+    temp < 0.001 || no_improve_epochs >= 50
 }
