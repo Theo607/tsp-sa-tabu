@@ -1,7 +1,12 @@
-NAME: output/dj38.tsp.tour
+NAME: output/BT_ANN_dj38.tour
 TYPE: TOUR
 DIMENSION: 38
 TOUR_SECTION
+28
+27
+31
+36
+34
 33
 38
 37
@@ -35,10 +40,5 @@ TOUR_SECTION
 25
 22
 24
-28
-27
-31
-36
-34
 -1
 EOF

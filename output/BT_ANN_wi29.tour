@@ -1,10 +1,7 @@
-NAME: output/wi29.tsp.tour
+NAME: output/BT_ANN_wi29.tour
 TYPE: TOUR
 DIMENSION: 29
 TOUR_SECTION
-1
-5
-8
 4
 3
 7
@@ -31,5 +28,8 @@ TOUR_SECTION
 10
 6
 2
+1
+5
+8
 -1
 EOF
