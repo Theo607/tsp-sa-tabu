@@ -22,7 +22,7 @@ fn main() {
         if let Ok(cities) = parse_tsp(&input_path) {
             let n = cities.len();
 
-            if 5000 < n {
+            if true {
                 println!(
                     "Wątek {:?}: Przetwarzanie {} (Rozmiar: {})", 
                     std::thread::current().id(), 
@@ -37,11 +37,10 @@ fn main() {
                 // --- 2. TABU SEARCH ---
                 let tabu_output = format!("{}BT_TABU_{}.tour", FILE_PATH_OUT, instance_pure_name);
                 
-                // Przykładowe parametry dla Tabu Search
                 let tabu_params = TabuParameters {
                     max_iterations: 10000, 
-                    tabu_tenure: (n as f64 * 0.2) as usize, // Kadencja zależna od rozmiaru instancji
-                    neighborhood_size: (n * 2).min(500),    // Ograniczenie próbowanego otoczenia
+                    tabu_tenure: (n as f64 * 0.2) as usize, 
+                    neighborhood_size: (n * 2).min(500),   
                 };
                 
                 let tabu_dist = run_tabu_search(&cities, &tabu_output, &tabu_params);

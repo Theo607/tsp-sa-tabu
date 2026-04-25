@@ -219,6 +219,30 @@ impl SimulationParameters {
     }
 }
 ```
+== Metoda Tabu Search
+=== Algorytm
+Algorytm rozwija idę Local Search poprzez dodanie listy tabu i sprytniejszego przeszukiwania otoczenia.
+Działanie algorytmu można opisać następująco: \
++ Losujemy początkowe rozwiązanie
++ Przeszukujemy jego otoczenie i wybieramy najlepsze rozwiązanie, którego nie ma na liście tabu
++ Umieszczamy je na liście i przyjmujemy jako bieżące rozwiązanie
++ Sprawdzamy warunek stopu
+
+W kodzie odpowiada temu metoda z pliku `tabu_search.rs`.
+=== Warunek Zatrzymania
+Warunkiem zatrzymania jest wykonanie maksymalnej liczby iteracji.
+=== Sposób Wyboru Sąsiada
+Sąsiada do analizy wybieramy w sposób losowy dobierając dwa różne wierzchołki i próbując wywołać invert.
+=== Dobór Parametrów
+Parametry dobrane empirycznie przy ręcznym testowaniu:
+```rust
+let tabu_params = TabuParameters {
+  max_iterations: 10000, 
+  tabu_tenure: (n as f64 * 0.2) as usize, 
+  neighborhood_size: (n * 2).min(500),   
+};
+```
+
 
 = Uzyskane Wyniki 
 #let tsp_info = (
