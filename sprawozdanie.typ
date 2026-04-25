@@ -220,59 +220,64 @@ impl SimulationParameters {
 }
 ```
 
-== Metoda 
-
 = Uzyskane Wyniki 
-== Metoda Symulowanego Wyżarzania
-Używając opisanej metody symulowanego wyżarzania otrzymano następujące wyniki:
-
-#table(
-  columns: (2fr, 4fr, 4fr, 2fr, 2fr),
-  align: horizon,
-  stroke: 0.5pt + gray,
-  inset: 10pt,
-  [*Kraj*], [*Wyniki (ANN)*], [*Wynik Optymalny*], [*Znaleziona Długość*], [*Optymalna Długość*],
-  
-  [Western Sahara (wi29)], 
-  image("figures/ann_wi29_tour.svg", height: 80pt), 
-  image("optimal_source/witour.gif", height: 80pt),
-  [27601.17],
-  [27603],
-
-  [Djibouti (dj38)], 
-  image("figures/ann_dj38_tour.svg", height: 80pt), 
-  image("optimal_source/djtour.gif", height: 80pt),
-  [6659.43],
-  [6656],
-
-  [Qatar (qa194)], 
-  image("figures/ann_qa194_tour.svg", height: 80pt), 
-  image("optimal_source/qatour.gif", height: 80pt),
-  [9390.16],
-  [9352],
-
-  [Uruguay (uy734)], 
-  image("figures/ann_uy734_tour.svg", height: 80pt), 
-  image("optimal_source/uytour.gif", height: 80pt),
-  [81045.10],
-  [79114],
-
-  [Zimbabwe (zi929)], 
-  image("figures/ann_zi929_tour.svg", height: 80pt), 
-  image("optimal_source/zitour.gif", height: 80pt),
-  [98175.38],
-  [95345],
-
-  [Oman (mu1979)], 
-  image("figures/ann_mu1979_tour.svg", height: 80pt), 
-  image("optimal_source/mutour.gif", height: 80pt),
-  [89283.91],
-  [86891],
-
-  [Canada (ca4663)], 
-  image("figures/ann_ca4663_tour.svg", height: 80pt), 
-  image("optimal_source/catour.gif", height: 80pt),
-  [1367360.43],
-  [1290319],
+#let tsp_info = (
+  "wi29":   (name: "Western Sahara", optimal: 27603,   opt_img: "witour.gif"),
+  "dj38":   (name: "Djibouti",       optimal: 6656,    opt_img: "djtour.gif"),
+  "qa194":  (name: "Qatar",          optimal: 9352,    opt_img: "qatour.gif"),
+  "uy734":  (name: "Uruguay",        optimal: 79114,   opt_img: "uytour.gif"),
+  "zi929":  (name: "Zimbabwe",       optimal: 95345,   opt_img: "zitour.gif"),
+  "mu1979": (name: "Oman",           optimal: 86891,   opt_img: "mutour.gif"),
+  "ca4663": (name: "Canada",         optimal: 1290319, opt_img: "catour.gif"),
+  "tz6117": (name: "Tanzania",       optimal: 259045,  opt_img: "tztour.gif"),
+  "eg7146": (name: "Egypt",          optimal: 501507,  opt_img: "egtour.gif"),
+  "ei8246": (name: "Irlandia",       optimal: 206171,  opt_img: "eitour.gif"),
 )
 
+#let ann_results = (
+  "ca4663": 1355651.52, "dj38": 6659.43, "eg7146": 181049.50, "ei8246": 219994.85,
+  "mu1979": 89769.91, "qa194": 9437.73, "tz6117": 417762.54, "uy734": 81324.27,
+  "wi29": 27601.17, "zi929": 97443.77
+)
+
+#let tabu_results = (
+  "ca4663": 3980677.91, "dj38": 6659.43, "eg7146": 965296.17, "ei8246": 1479252.09,
+  "mu1979": 134567.19, "qa194": 10039.70, "tz6117": 1841657.65, "uy734": 93830.30,
+  "wi29": 27601.17, "zi929": 109839.34
+)
+
+#let get_size(id) = {
+  let digits = id.clusters().filter(c => c in "0123456789").join()
+  int(digits)
+}
+
+#let results_table(algo_title, algo_prefix, results_map) = {
+  let sorted_keys = results_map.keys().sorted(key: get_size)
+  
+  table(
+    columns: (1.5fr, 3.5fr, 3.5fr, 2fr, 2fr),
+    align: horizon,
+    stroke: 0.5pt + gray,
+    inset: 8pt,
+    [*Instancja (N)*], [*Wyniki (#algo_title)*], [*Wynik Optymalny*], [*Długość znaleziona*], [*Długość optymalna*],
+    
+    ..for id in sorted_keys {
+      let info = tsp_info.at(id)
+      let found = results_map.at(id)
+      (
+        [*#info.name* \ (#id)],
+        image("figures/" + algo_prefix + "_" + id + "_tour.svg", height: 75pt),
+        image("optimal_source/" + info.opt_img, height: 75pt),
+        [#found],
+        [#info.optimal],
+      )
+    }
+  )
+}
+= Wyniki Algorytmu Wyżarzania (Simulated Annealing)
+#results_table("ANN", "ann", ann_results)
+
+#pagebreak()
+
+= Wyniki Algorytmu Tabu Search
+#results_table("TABU", "tabu", tabu_results)

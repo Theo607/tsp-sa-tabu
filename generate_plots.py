@@ -37,19 +37,26 @@ def plot_tour(algo_name, instance_name, coords, tour, output_path):
     plt.figure(figsize=(10, 10))
     path_nodes = tour + [tour[0]]
     
-    c1 = [coords[node][0] for node in path_nodes] # Lat
-    c2 = [coords[node][1] for node in path_nodes] # Lon
+    c1 = [coords[node][0] for node in path_nodes] # Lat (zazwyczaj Y)
+    c2 = [coords[node][1] for node in path_nodes] # Lon (zazwyczaj X)
 
-    if "ca4663" in instance_name or "wi29" in instance_name:
+    # Transformacje współrzędnych dla poprawnej orientacji map
+# Transformacje współrzędnych dla poprawnej orientacji map
+    if any(k in instance_name for k in ["ca4663", "wi29", "ei8246"]):
+        # Odbicie względem osi Y (Irlandia, Kanada, Sahara)
         x, y = [-v for v in c2], c1
-    elif "zi929" in instance_name:
+    elif "tz6117" in instance_name:
+        # Odbicie względem osi X (Tanzania)
         x, y = c2, [-v for v in c1]
-    elif any(k in instance_name for k in ["mu1979", "dj38", "qa194"]):
-        x, y = c2, c1
+    elif "zi929" in instance_name:
+        # Zimbabwe (według Twojego kodu też ma negację c1, czyli osi X)
+        x, y = c2, [-v for v in c1]
     elif "uy734" in instance_name:
+        # Urugwaj (podwójne odbicie / obrót)
         x, y = [-v for v in c2], [-v for v in c1]
     else:
-        x, y = c2, c1 
+        # Reszta świata (Egipt, Katar, Dżibuti, Oman)
+        x, y = c2, c1
 
     plt.plot(x, y, color='#2c3e50', linewidth=0.8, alpha=0.7)
     plt.scatter(x, y, color='#e74c3c', s=2)
@@ -59,7 +66,6 @@ def plot_tour(algo_name, instance_name, coords, tour, output_path):
     plt.title(f"TSP {algo_name}: {instance_name}")
     plt.savefig(output_path, format='svg', bbox_inches='tight')
     plt.close()
-
 def main():
     tsp_dir = "assets"
     tour_dir = "output"
