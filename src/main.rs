@@ -22,7 +22,7 @@ fn main() {
         if let Ok(cities) = parse_tsp(&input_path) {
             let n = cities.len();
 
-            if n <= 5000 {
+            if 5000 < n {
                 println!(
                     "Wątek {:?}: Przetwarzanie {} (Rozmiar: {})", 
                     std::thread::current().id(), 
