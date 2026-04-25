@@ -23,7 +23,7 @@
 
 == Dane
 Do wykonania zadania użyto danych ze 
-#link("https://www.math.uwaterloo.ca/tsp/world/countries.html")[strony wydziału matematyki Uniwersytetu Waterloo].
+#link("https://www.math.uwaterloo.ca/tsp/world/countries.html")[#text(blue)[strony wydziału matematyki Uniwersytetu Waterloo]].
 Wszystkie użyte pliki znajdują się w folderze `assets/`.
 W ramach pracy wykorzystano zbiory danych: \
 #align(center)[
@@ -220,7 +220,10 @@ impl SimulationParameters {
 }
 ```
 
-=== Uzyskane Wyniki 
+== Metoda 
+
+= Uzyskane Wyniki 
+== Metoda Symulowanego Wyżarzania
 Używając opisanej metody symulowanego wyżarzania otrzymano następujące wyniki:
 
 #table(
