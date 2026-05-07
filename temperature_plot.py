@@ -1,4 +1,3 @@
-from os.path import exists
 import matplotlib.pyplot as plt
 from pathlib import Path
 import numpy as np

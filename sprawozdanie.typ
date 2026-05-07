@@ -305,3 +305,6 @@ let tabu_params = TabuParameters {
 
 = Wyniki Algorytmu Tabu Search
 #results_table("TABU", "tabu", tabu_results)
+
+= Porównanie długości
+#image("path_results.svg")
